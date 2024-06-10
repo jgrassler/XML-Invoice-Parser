@@ -1,16 +1,18 @@
 XMLInvoice
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+This module is a universal parser for various XML invoice
+formats specified in EN16931 (XRechnung/Factur-X/ZUGFeRD 2.x
+and higher) and adjacent ones (ZUGFeRD 1.0). It is purely an
+XML parser, so extraction of PDF attachments for hybrid
+formats is out of scope and up to the application programmer.
+At the time of this writing, the Poppler module and the
+pdfdetach(1) command from xpdf-utils/poppler-utils covered the
+widest range of PDF versions/dialects.
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
-
+It originally started out as a patch against the ERP system
+Kivitendo <https://www.github.com/kivitendo/kivitendo-erp>
+where it is used for parsing XML invoices, but I believe it
+can be useful in a wider scope than that.
 
 INSTALLATION
 
@@ -29,6 +31,9 @@ perldoc command.
     perldoc XMLInvoice
 
 You can also look for information at:
+    
+    Source code:
+        https://www.github.com/jgrassler/XMLInvoice
 
     RT, CPAN's request tracker (report bugs here)
         https://rt.cpan.org/NoAuth/Bugs.html?Dist=XMLInvoice
@@ -44,11 +49,13 @@ You can also look for information at:
 
 ACKNOWLEDGEMENTS
 
+Thanks to Sven Schoeling <s.schoeling@googlemail.com> who made various
+improvements to this module's invocation.
+
 LICENSE AND COPYRIGHT
 
-This software is Copyright (c) 2024 by Johannes Grassler.
+This software is Copyright (C) 2023-2024 by Johannes Grassler.
 
 This is free software, licensed under:
 
   The GNU General Public License, Version 2, June 1991
-
