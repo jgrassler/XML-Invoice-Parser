@@ -1,4 +1,4 @@
-XMLInvoice
+XML::Invoice::Parser
 
 This module is a universal parser for various XML invoice
 formats specified in EN16931 (XRechnung/Factur-X/ZUGFeRD 2.x
@@ -28,12 +28,12 @@ SUPPORT AND DOCUMENTATION
 After installing, you can find documentation for this module with the
 perldoc command.
 
-    perldoc XMLInvoice
+    perldoc XML::Invoice::Parser
 
 You can also look for information at:
     
     Source code:
-        https://www.github.com/jgrassler/XMLInvoice
+        https://www.github.com/jgrassler/XML::Invoice::Parser
 
 ACKNOWLEDGEMENTS
 

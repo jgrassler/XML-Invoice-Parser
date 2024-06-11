@@ -1,9 +1,9 @@
 Changes
-lib/XMLInvoice.pm
-lib/XMLInvoice/Base.pm
-lib/XMLInvoice/CrossIndustryInvoice.pm
-lib/XMLInvoice/CrossIndustryDocument.pm
-lib/XMLInvoice/UBL.pm
+lib/XML/Invoice/Parser.pm
+lib/XML/Invoice/Parser/Base.pm
+lib/XML/Invoice/Parser/CrossIndustryInvoice.pm
+lib/XML/Invoice/Parser/CrossIndustryDocument.pm
+lib/XML/Invoice/Parser/UBL.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files

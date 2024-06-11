@@ -1,4 +1,4 @@
-package XMLInvoice;
+package XML::Invoice::Parser;
 
 use strict;
 use warnings;
@@ -6,23 +6,23 @@ use warnings;
 use List::Util qw(first);
 use XML::LibXML;
 
-use XMLInvoice::UBL;
-use XMLInvoice::CrossIndustryInvoice;
-use XMLInvoice::CrossIndustryDocument;
+use XML::Invoice::Parser::UBL;
+use XML::Invoice::Parser::CrossIndustryInvoice;
+use XML::Invoice::Parser::CrossIndustryDocument;
 
 use constant RES_OK => 0;
 use constant RES_XML_PARSING_FAILED => 1;
 use constant RES_UNKNOWN_ROOT_NODE_TYPE => 2;
 
 our @document_modules = qw(
-  XMLInvoice::CrossIndustryDocument
-  XMLInvoice::CrossIndustryInvoice
-  XMLInvoice::UBL
+  XML::Invoice::Parser::CrossIndustryDocument
+  XML::Invoice::Parser::CrossIndustryInvoice
+  XML::Invoice::Parser::UBL
 );
 
 =head1 NAME
 
-XMLInvoice - Parser for various XML invoice formats with format auto detection
+XML::Invoice::Parser - Parse various XML invoice formats with format auto detection
 
 =head1 VERSION
 
@@ -34,29 +34,33 @@ our $VERSION = '0.1.0';
 
 =head1 DESCRIPTION
 
-C<XMLInvoice> is a universal parser for various XML invoice formats specified
+C<XML::Invoice::Parser> is a universal parser for various XML invoice formats specified
 in EN16931 (XRechnung/Factur-X/ZUGFeRD 2.x and higher) and adjacent ones
 (ZUGFeRD 1.0).  
 
-C<XMLInvoice> will automatically detect the format of an XML invoice passed as
+C<XML::Invoice::Parser> will automatically detect the format of an XML invoice passed as
 a flat string and will handle all details from there: depending on its document
-type declaration, it will pick and instatiate the appropriate C<XML::Invoice>
+type declaration, it will pick and instatiate the appropriate C<XML::Invoice::Parser>
 child class for parsing the document and return an object exposing its data
 with the standardized structure outlined in the synopsis below.
 
 Please note that the parser classes work on pure XML only. For hybrid formats
 where the XML data is attached to a PDF document (such as ZUGFeRD), you need to
-extract the XML payload and pass that XML payload to C<XMLInvoice>. Handling
-PDF attachments is outside C<XMLInvoice>'s scope. That being said, the
+extract the XML payload and pass that XML payload to C<XML::Invoice::Parser>. Handling
+PDF attachments is outside C<XML::Invoice::Parser>'s scope. That being said, the
 xmlbill2txt and xmlbill2csv shipped with this module can deal with extracting
 XML attachments from PDF files.
 
-See L<XMLInvoice::Base> for details on the shared interface of the returned
-classes.
+See L<XML::Invoice::Parser::Base> for details on the shared interface of the returned
+classes. Please implement this interface if you want to create your own Parser
+classes under the C<XML::Invoice::Parser> name space.
 
 =head1 SUPPORTED FORMATS
 
-Currently, C<XMLInvoice> supports the following formats:
+Currently, C<XML::Invoice::Parser> supports the following formats. Please note
+that PDF handling is out of scope, so for any hybrid format where the XML
+data is transmitted as an attachment to a PDF file, the extracted XML payload
+will have to be provided to the C<XML::Invoice::Parser>> constructor.
 
 =head2 XRechnung
 
@@ -81,7 +85,7 @@ the profile used, this XML payload fulfills the requirements of EN16931.
 =head1 SYNOPSIS
 
   # $xml_data contains an XML document as flat scalar
-  my $invoice_parser = XMLInvoice->new($xml_data);
+  my $invoice_parser = XML::Invoice::Parser->new($xml_data);
 
   # %metadata is a hash of document level metadata items
   my %metadata = %{$invoice_parser->metadata};
@@ -172,7 +176,7 @@ Johannes Grassler, C<< <info@computer-grassler.de> >>
 
 Please report any bugs or feature requests to C<bug-xmlinvoice at rt.cpan.org>,
 or through the web interface at
-L<https://rt.cpan.org/NoAuth/ReportBug.html?Queue=XMLInvoice>.  I will be
+L<https://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML::Invoice::Parser>.  I will be
 notified, and then you'll automatically be notified of progress on your bug as
 I make changes.
 
@@ -180,7 +184,7 @@ I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc XMLInvoice
+    perldoc XML::Invoice::Parser
 
 You can also look for information at:
     
@@ -188,19 +192,19 @@ You can also look for information at:
     
 =item * RT: CPAN's request tracker (report bugs here)
 
-L<https://rt.cpan.org/NoAuth/Bugs.html?Dist=XMLInvoice>
+L<https://rt.cpan.org/NoAuth/Bugs.html?Dist=XML::Invoice::Parser>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/XMLInvoice>
+L<http://annocpan.org/dist/XML::Invoice::Parser>
 
 =item * CPAN Ratings
 
-L<https://cpanratings.perl.org/d/XMLInvoice>
+L<https://cpanratings.perl.org/d/XML::Invoice::Parser>
 
 =item * Search CPAN
 
-L<https://metacpan.org/release/XMLInvoice>
+L<https://metacpan.org/release/XML::Invoice::Parser>
 
 =back
 
@@ -219,4 +223,4 @@ This is free software, licensed under:
 
 =cut
 
-1; # End of XMLInvoice
+1; # End of XML::Invoice::Parser

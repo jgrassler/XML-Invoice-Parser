@@ -7,7 +7,7 @@ use Test::More;
 plan tests => 1;
 
 BEGIN {
-    use_ok( 'XMLInvoice' ) || print "Bail out!\n";
+    use_ok( 'XML::Invoice::Parser' ) || print "Bail out!\n";
 }
 
-diag( "Testing XMLInvoice $XMLInvoice::VERSION, Perl $], $^X" );
+diag( "Testing XML::Invoice::Parser $XML::Invoice::Parser::VERSION, Perl $], $^X" );

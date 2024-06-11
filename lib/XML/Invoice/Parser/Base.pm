@@ -1,4 +1,4 @@
-package XMLInvoice::Base;
+package XML::Invoice::Parser::Base;
 
 use strict;
 use warnings;
@@ -14,22 +14,22 @@ A XML::LibXML document object model (DOM) object created from the XML data suppl
 =item message
 
 Will contain a detailed error message if the C<result> attribute is anything
-other than C<XMLInvoice::RES_OK>.
+other than C<XML::Invoice::Parser::RES_OK>.
 
 =item result
 
 A status field indicating whether the supplied XML data could be parsed. It
 can take the following values:
 
-=item XMLInvoice::RES_OK
+=item XML::Invoice::Parser::RES_OK
 
 File has been parsed successfully.
 
-=item XMLInvoice::RES_XML_PARSING FAILED
+=item XML::Invoice::Parser::RES_XML_PARSING FAILED
 
 Parsing the file failed.
 
-=item XMLInvoice::RES_UNKNOWN_ROOT_NODE_TYPE
+=item XML::Invoice::Parser::RES_UNKNOWN_ROOT_NODE_TYPE
 
 The root node is of an unknown type. Currently, C<rsm:CrossIndustryInvoice> and
 C<ubl:Invoice> are supported.
@@ -38,9 +38,9 @@ C<ubl:Invoice> are supported.
 
 =head1 METHODS
 
-=head2 Data structure definition methods (only in C<XMLInvoice>)
+=head2 Data structure definition methods (only in C<XML::Invoice::Parser>)
 
-These methods are only implemented in C<XMLInvoice> itself and define the
+These methods are only implemented in C<XML::Invoice::Parser> itself and define the
 data structures to be exposed by any child classes.
 
 =over 4
@@ -49,16 +49,16 @@ data structures to be exposed by any child classes.
 
 Returns all keys the hash returned by any child's C<metadata()> method must
 contain. If you add keys to this list, you need to add them to all classes
-inheriting from C<XMLInvoice> as well. An application may use this method
+inheriting from C<XML::Invoice::Parser> as well. An application may use this method
 to discover the metadata keys guaranteed to be present.
 
 =cut
 
 sub data_keys {
   my @keys = (
-    'currency',      # The bill's currency, such as "EUR"
-    'direct_debit',  # Boolean: whether the bill will get paid by direct debit (1) or not (0)
-    'duedate',       # The bill's due date in YYYY-MM-DD format.
+    'currency',      # The invoice's currency, such as "EUR"
+    'direct_debit',  # Boolean: whether the invoice will get paid by direct debit (1) or not (0)
+    'duedate',       # The invoice's due date in YYYY-MM-DD format.
     'gross_total',   # The invoice's sum total with tax included
     'iban',          # The creditor's IBAN
     'invnumber',     # The invoice's number
@@ -67,7 +67,7 @@ sub data_keys {
                      # there is no VAT ID (USTiD in Germany).
     'transdate',     # The date the invoice was issued in YYYY-MM-DD format.
     'type',          # Numeric invoice type code, e.g. 380
-    'ustid',         # The creditor's UStID.
+    'ustid',         # The creditor's VAT ID (UStID in Germany).
     'vendor_name',   # The vendor's company name
   );
   return \@keys;
@@ -77,7 +77,7 @@ sub data_keys {
 
 Returns all keys the item hashes returned by any child's C<items()> method must
 contain. If you add keys to this list, you need to add them to all classes
-inheriting from C<XMLInvoice> as well. An application may use this method
+inheriting from C<XML::Invoice::Parser> as well. An application may use this method
 to discover the metadata keys guaranteed to be present.
 
 =back
@@ -100,18 +100,18 @@ sub item_keys  {
 
 =head2 User/application facing methods
 
-Any class inheriting from C<XMLInvoice> must implement the following
-methods. To ensure this happens, C<XMLInvoice> contains stub functions that
+Any class inheriting from C<XML::Invoice::Parser> must implement the following
+methods. To ensure this happens, C<XML::Invoice::Parser> contains stub functions that
 raise an exception if a child class does not override them.
 
 =over 4
 
 =item new($xml_data)
 
-Constructor for C<XMLInvoice>. This method takes a scalar containing the
+Constructor for C<XML::Invoice::Parser>. This method takes a scalar containing the
 entire XML document to be parsed as a flat string as its sole argument. It will
 instantiate the appropriate child class to parse the XML document in question,
-call its C<parse_xml> method and return the C<XMLInvoice> child object it
+call its C<parse_xml> method and return the C<XML::Invoice::Parser> child object it
 instantiated. From that point on, the structured data retrieved from the XML
 document will be available through the object's C<metadata> and C<items()>
 methods.
@@ -127,13 +127,13 @@ C<undef> for any data items not present or empty in the XML document.
 
 sub metadata {
   my $self = shift;
-  die "Children of $self must implement a metadata() method returning the bill's metadata as a hash.";
+  die "Children of $self must implement a metadata() method returning the invoice's metadata as a hash.";
 }
 
 =item check_signature($dom)
 
 This static method takes a DOM object and returns 1 if this DOM object can be
-parsed by the child class in question, 0 otherwise. C<XMLInvoice> uses this
+parsed by the child class in question, 0 otherwise. C<XML::Invoice::Parser> uses this
 method to determine which child class to instantiate for a given document. All
 child classes must implement this method.
 
@@ -147,7 +147,7 @@ sub check_signature {
 =item supported()
 
 This static method returns an array of free-form strings describing XML invoice
-types parseable by the child class. C<XMLInvoice> uses this method to
+types parseable by the child class. C<XML::Invoice::Parser> uses this method to
 output a list of supported XML invoice types if its constructor fails to find
 to find an appropriate child class to parse the given document with. All child
 classes must implement this method.
@@ -172,17 +172,17 @@ document.
 
 sub items {
   my $self = shift;
-  die "Children of $self must implement a item() method returning the bill's items as a hash.";
+  die "Children of $self must implement a item() method returning the invoice's items as a hash.";
 }
 
 
 =item parse_xml()
 
-This method is only implemented in child classes of C<XMLInvoice> and is
-called by the C<XMLInvoice> constructor once the appropriate child class has been
+This method is only implemented in child classes of C<XML::Invoice::Parser> and is
+called by the C<XML::Invoice::Parser> constructor once the appropriate child class has been
 determined and instantiated. It uses C<$self->{dom}>, an C<XML::LibXML>
 instance to iterate through the XML document to parse. That XML document is
-created by the C<XMLInvoice> constructor.
+created by the C<XML::Invoice::Parser> constructor.
 
 =back
 
@@ -196,7 +196,7 @@ sub parse_xml {
 =head2 Internal methods
 
 These methods' purpose is child classs selection and making sure child classes
-implent the interface promised by C<XMLInvoice::Base>. You can safely ignore them
+implent the interface promised by C<XML::Invoice::Parser::Base>. You can safely ignore them
 if you don't plan on implementing any child classes.
 
 =over 4
@@ -205,7 +205,7 @@ if you don't plan on implementing any child classes.
 
 Returns a list of all keys present in the hash returned by the class'
 C<metadata()> method. Must be implemented in all classes inheriting from
-C<XMLInvoice> This list must contain the same keys as the list returned by
+C<XML::Invoice::Parser> This list must contain the same keys as the list returned by
 C<data_keys>. Omitting this method from a child class will cause an exception.
 
 =cut
@@ -219,7 +219,7 @@ sub _data_keys {
 
 Returns a list of all keys present in the hashes returned by the class'
 C<items()> method. Must be implemented in all classes inheriting from
-C<XMLInvoice> This list must contain the same keys as the list returned by
+C<XML::Invoice::Parser> This list must contain the same keys as the list returned by
 C<item_keys>. Omitting this method from a child class will cause an exception.
 
 =back

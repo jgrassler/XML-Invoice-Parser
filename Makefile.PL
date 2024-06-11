@@ -4,10 +4,10 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 my %WriteMakefileArgs = (
-    NAME             => 'XMLInvoice',
+    NAME             => 'XML::Invoice::Parser',
     AUTHOR           => q{Johannes Grassler <info@computer-grassler.de>},
-    VERSION_FROM     => 'lib/XMLInvoice.pm',
-    ABSTRACT_FROM    => 'lib/XMLInvoice.pm',
+    VERSION_FROM     => 'lib/XML/Invoice/Parser.pm',
+    ABSTRACT_FROM    => 'lib/XML/Invoice/Parser.pm',
     LICENSE          => 'gpl_2',
     MIN_PERL_VERSION => '5.006',
     CONFIGURE_REQUIRES => {
@@ -20,7 +20,7 @@ my %WriteMakefileArgs = (
 				'XML::LibXML'				=> 0,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean => { FILES => 'XMLInvoice-*' },
+    clean => { FILES => 'XML::Invoice::Parser-*' },
 );
 
 # Compatibility with old versions of ExtUtils::MakeMaker

@@ -1,21 +1,21 @@
-package XMLInvoice::UBL;
+package XML::Invoice::Parser::UBL;
 
 use strict;
 use warnings;
 
-use parent qw(XMLInvoice::Base);
+use parent qw(XML::Invoice::Parser::Base);
 
 use constant ITEMS_XPATH => '//cac:InvoiceLine';
 
 =head1 NAME
 
-XMLInvoice::UBL - XML parser for Universal Business Language invoices
+XML::Invoice::Parser::UBL - XML parser for Universal Business Language invoices
 
 =head1 DESCRIPTION
 
-C<XMLInvoice::UBL> parses XML invoices in Oasis Universal Business
+C<XML::Invoice::Parser::UBL> parses XML invoices in Oasis Universal Business
 Language format and makes their data available through the interface defined
-by C<XMLInvoice>. Refer to L<XMLInvoice> for a detailed description of
+by C<XML::Invoice::Parser>. Refer to L<XML::Invoice::Parser> for a detailed description of
 that interface.
 
 See L<http://docs.oasis-open.org/ubl/os-UBL-2.1/UBL-2.1.html#T-INVOICE> for
@@ -40,7 +40,7 @@ statements specifying the location of this field inside a line item.
 
 =back
 
-When invoked by the C<XMLInvoice> constructor, C<parse_xml()> will first
+When invoked by the C<XML::Invoice::Parser> constructor, C<parse_xml()> will first
 use the XPath statements from the C<scalar_xpaths()> hash to populate the hash
 returned by the C<metadata()> method.
 
@@ -91,7 +91,7 @@ sub scalar_xpaths {
   };
 }
 
-# XML XPath expressions for parsing bill items
+# XML XPath expressions for parsing invoice items
 sub item_xpaths {
   return {
     'currency' => './cbc:LineExtensionAmount[attribute::currencyID]',

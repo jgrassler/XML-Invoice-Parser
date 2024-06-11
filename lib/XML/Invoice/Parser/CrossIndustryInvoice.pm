@@ -1,21 +1,21 @@
-package XMLInvoice::CrossIndustryInvoice;
+package XML::Invoice::Parser::CrossIndustryInvoice;
 
 use strict;
 use warnings;
 
-use parent qw(XMLInvoice::Base);
+use parent qw(XML::Invoice::Parser::Base);
 
 use constant ITEMS_XPATH => '//ram:IncludedSupplyChainTradeLineItem';
 
 =head1 NAME
 
-XMLInvoice::CrossIndustryInvoice - XML parser for UN/CEFACT Cross Industry Invoice
+XML::Invoice::Parser::CrossIndustryInvoice - XML parser for UN/CEFACT Cross Industry Invoice
 
 =head1 DESCRIPTION
 
-C<XMLInvoice::CrossIndustryInvoice> parses XML invoices in UN/CEFACT Cross
+C<XML::Invoice::Parser::CrossIndustryInvoice> parses XML invoices in UN/CEFACT Cross
 Industry Invoice format and makes their data available through the interface
-defined by C<XMLInvoice>. Refer to L<XMLInvoice> for a detailed
+defined by C<XML::Invoice::Parser>. Refer to L<XML::Invoice::Parser> for a detailed
 description of that interface.
 
 See L<https://unece.org/trade/uncefact/xml-schemas> for that format's
@@ -40,7 +40,7 @@ statements specifying the location of this field inside a line item.
 
 =back
 
-When invoked by the C<XMLInvoice> constructor, C<parse_xml()> will first
+When invoked by the C<XML::Invoice::Parser> constructor, C<parse_xml()> will first
 use the XPath statements from the C<scalar_xpaths()> hash to populate the hash
 returned by the C<metadata()> method.
 
