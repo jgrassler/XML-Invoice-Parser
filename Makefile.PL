@@ -10,6 +10,14 @@ my %WriteMakefileArgs = (
     ABSTRACT_FROM    => 'lib/XML/Invoice/Parser.pm',
     LICENSE          => 'gpl_2',
     MIN_PERL_VERSION => '5.006',
+    META_MERGE => {
+      resources => {
+        license     => 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html.en',
+        homepage    => 'https://github.com/jgrassler/XML-Invoice-Parser',
+        bugtracker  => 'https://github.com/jgrassler/XML-Invoice-Parser/issues',
+        repository  => 'https://github.com/jgrassler/XML-Invoice-Parser',
+      },
+    },
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => '0',
     },
